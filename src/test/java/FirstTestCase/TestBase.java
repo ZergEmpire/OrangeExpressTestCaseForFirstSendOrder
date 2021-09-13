@@ -84,9 +84,10 @@ public class TestBase {
     @Step("Выбираю рандомный город. Выбор городов реализован через Drop Down")
 
     public void RestSelect() {
-        List<SelenideElement> terminalSwitch = elements(By.xpath("//ul[contains(@class, \"city-select-list\")]/li/a[and not (text() = \"Видное\"))]";
+        List<SelenideElement> terminalSwitch = elements(By.xpath("//ul[contains(@class, \"city-select-list\")]/li/a[(@href) and not (@href = \"/away?url=http%3A%2F%2Fvidnoe.pizza-sushi.com%2F&RestaurantID=01e55e57-78cf-4d3d-b6f4-0b26691781bd\") and not (@href = \"https://tokapizza.ru/\") and not (@href = \"/away?url=http%3A%2F%2Fpodolsk.pizza-sushi.com%2F&RestaurantID=bede0378-681e-4ab7-8377-95840735eea8\")]"));
         int i = (int) (Math.random() * terminalSwitch.size());
         terminalSwitch.get(i).click();
+
 
     }
     /*
@@ -94,6 +95,10 @@ public class TestBase {
         int i = (int) (Math.random() * terminalSwitch.size());
         terminalSwitch.get(i).click();*/ /*- Выбор города через dropDown */
 
+    @Step("Тыкаю на переход к главной странице")
+    public void GoMainPage (){
+        $x("//div[contains(@class, \"h-left\")]/div[@class = \"logo\"]").click();
+    }
 
     @Step("Перехожу в рандомный пункт меню для оформления тестового заказа")
     public void mathRandomHead() {
@@ -127,7 +132,7 @@ public class TestBase {
 
     @Step("Выбираем тип доставки самовывоз")
     public void SelectDeliveryTypePickUp() {
-        $(By.xpath("//label[@class = \"last\"]")).scrollTo().click();
+        $(By.xpath("//label[@class = \"last\"]")).click();
     }
 
 
@@ -147,10 +152,12 @@ public class TestBase {
         $x("//input[@id = \"order_comment\"]").scrollTo().setValue(OrderComment);
     }
 
-    @Step("Выбираем способ оплаты")
+    @Step("Выбираем способ оплаты (Налик)")
     public void SelectPayType() {
-        $x("//div[@class = \"payment-wrapper\"][2]").scrollTo().click();
+        $x("//div[@class = \"payment-wrapper\"][1]").scrollTo().click();
+        $ ("#change").setValue(howMoneyToCourier);
     }
+
 
     @Step("Тыкаем на отправку заказа")
     public void SendOrder() {

@@ -13,6 +13,7 @@ public class TestClass extends TestBase {
     public void userCanSendOrder() {
         openURL();
         RestSelect();
+        GoMainPage();
         mathRandomHead();
         PickRandCards();
         GoBasket();
