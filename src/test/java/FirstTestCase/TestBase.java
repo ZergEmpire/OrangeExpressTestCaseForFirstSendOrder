@@ -38,7 +38,6 @@ public class TestBase {
 
     @Before
     public void setUp() {
-
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
@@ -65,6 +64,7 @@ public class TestBase {
         WebDriverRunner.setWebDriver(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+
     }
 
     @After
@@ -84,7 +84,7 @@ public class TestBase {
     @Step("Выбираю рандомный город. Выбор городов реализован через Drop Down")
 
     public void RestSelect() {
-        List<SelenideElement> terminalSwitch = elements(By.xpath("//ul[contains(@class, \"city-select-list\")]/li/a"));
+        List<SelenideElement> terminalSwitch = elements(By.xpath("//ul[contains(@class, \"city-select-list\")]/li/a[and not (text() = \"Видное\"))]";
         int i = (int) (Math.random() * terminalSwitch.size());
         terminalSwitch.get(i).click();
 
@@ -97,7 +97,7 @@ public class TestBase {
 
     @Step("Перехожу в рандомный пункт меню для оформления тестового заказа")
     public void mathRandomHead() {
-        List<SelenideElement> mathRandomHead = elements(By.xpath("//a[contains(@class, \"scroll-nav_link\") and not (@href = \"/menu/pizza\") and not (@href = \"/menu/deserty\")]"));
+        List<SelenideElement> mathRandomHead = elements(By.xpath("//a[contains(@class, \"scroll-nav_link\") and not (@href = \"/menu/pizza\") and not (@href = \"/menu/deserty\") and not (@href = \"/menu/rolly\") and not (@href = \"/menu/zakusk\") and not (@href = \"/menu/salaty\")]"));
         int i = (int) (Math.random() * mathRandomHead.size());
         mathRandomHead.get(i).click();
 
@@ -106,7 +106,7 @@ public class TestBase {
     /*$(By.xpath("//a[@href= \"/menu/frityur\"]")).click();*/ /*- кастыль для мясоруба*/
 
 
-    @Step("Добавляем в корзину карточку товара(Картофель Фри)")
+    @Step("Добавляем в корзину карточку товара")
     public void PickRandCards() {
         List<SelenideElement> clickRandomCards = elements(By.xpath("//button[contains(@class, \"add-to-basket\")]"));
         int i = (int) (Math.random() * clickRandomCards.size());
@@ -121,13 +121,13 @@ public class TestBase {
     @Step("Переходим в корзину")
 
     public void GoBasket() {
-        /*        $(By.xpath("//a[contains(@class, \"btn-basket\")]")).click();*/
+
         $x("//a[contains(@class, \"btn-basket\")]").click();
     }
 
     @Step("Выбираем тип доставки самовывоз")
     public void SelectDeliveryTypePickUp() {
-        $(By.xpath("//label[@class = \"last\"]")).click();
+        $(By.xpath("//label[@class = \"last\"]")).scrollTo().click();
     }
 
 
@@ -141,15 +141,15 @@ public class TestBase {
 
     @Step("Заполняем поля")
     public void fillInFields() {
-        $x("//input[@id = \"order_name\"]").setValue(TestName);
-        $x("//input[@id = \"order_phone\"]").setValue(TestPhoneNumberLogin);
-        $x("//input[@id = \"order_email\"]").setValue(TestEmailAddress);
-        $x("//input[@id = \"order_comment\"]").setValue(OrderComment);
+        $x("//input[@id = \"order_name\"]").scrollTo().setValue(TestName);
+        $x("//input[@id = \"order_phone\"]").scrollTo().setValue(TestPhoneNumberLogin);
+        $x("//input[@id = \"order_email\"]").scrollTo().setValue(TestEmailAddress);
+        $x("//input[@id = \"order_comment\"]").scrollTo().setValue(OrderComment);
     }
 
     @Step("Выбираем способ оплаты")
     public void SelectPayType() {
-        $x("//div[@class = \"payment-wrapper\"][3]").scrollTo().click();
+        $x("//div[@class = \"payment-wrapper\"][2]").scrollTo().click();
     }
 
     @Step("Тыкаем на отправку заказа")
