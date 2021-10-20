@@ -46,7 +46,7 @@ public class TestBase {
         capabilities.setCapability("browserName", "chrome");
         capabilities.setCapability("browserVersion", "91.0");
 
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+        capabilities.setCapability("moon:options", Map.<String, Object>of(
                 "enableVNC", true,
                 "enableVideo", true
 
@@ -54,7 +54,7 @@ public class TestBase {
         RemoteWebDriver driver = null;
         try {
             driver = new RemoteWebDriver(
-                    new URL("http://192.168.1.17:8080/wd/hub"),
+                    new URL("http://192.168.1.17:30901/wd/hub"),
                     capabilities
             );
         } catch (MalformedURLException e) {
@@ -116,7 +116,9 @@ public class TestBase {
 
     @Step("Выбираю тип доставки самовывоз")
     public void selectDeliveryTypePickUp() {
-        $(By.xpath("//label[@class = \"last\"]")).click();
+        SelenideElement typePickUp = $(By.xpath("//div[@class = \"radio-toggler\"]/label[@class = \"last\"]"));
+        typePickUp.closest(".address-summary").scrollIntoView(false);
+        typePickUp.click();
     }
 
 
@@ -146,7 +148,9 @@ public class TestBase {
 
     @Step("Кликаю на отправку заказа")
     public void sendOrder() {
-        $x("//div[@class = \"item-cart-buttons\" ]/button[contains(@class, \"btn\")]").scrollTo().click();
+ /* $x("//div[@id = \"pay-info\"]").scrollTo();
+        $x("//div[@class = \"item-cart-buttons\" ]/button[contains(@class, \"btn\") and not (@id)]").shouldBe(visible).click();*/
+        $x("//div[@class = \"item-cart-buttons\" ]/button[contains(@class, \"btn\") and not (@id)]").scrollTo().click();
     }
 
     @Step("Жду перехода в статус принят")
